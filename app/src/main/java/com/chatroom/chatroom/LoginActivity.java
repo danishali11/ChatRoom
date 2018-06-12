@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,20 +22,32 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 public class LoginActivity extends AppCompatActivity {
-
+    ImageView signinback;
+    private customfonts.MyTextView mSignInbtn;
     // TODO: Add member variables here:
      private FirebaseAuth mAuth;
     // UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+    private customfonts.MyEditText mEmailView;
+    private customfonts.MyEditText mPasswordView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.login_email);
-        mPasswordView = (EditText) findViewById(R.id.login_password);
+        signinback = (ImageView)findViewById(R.id.signinback);
+
+
+        signinback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(it);
+            }
+        });
+
+        mEmailView = (customfonts.MyEditText) findViewById(R.id.login_email);
+        mPasswordView = (customfonts.MyEditText) findViewById(R.id.login_password);
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -44,6 +57,13 @@ public class LoginActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+        mSignInbtn=(customfonts.MyTextView)findViewById(R.id.login_register_button);
+        mSignInbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin();
             }
         });
 

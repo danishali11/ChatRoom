@@ -2,6 +2,7 @@ package com.chatroom.chatroom;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.fonts.FontVariationAxis;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,17 +29,21 @@ import java.util.Set;
 
 public class RegisterActivity extends AppCompatActivity {
 
+
+
     // Constants
+
     public static final String CHAT_PREFS = "ChatPrefs";
     public static final String DISPLAY_NAME_KEY = "username";
 
     // TODO: Add member variables here:
     // UI references.
-    private AutoCompleteTextView mEmailView;
-    private AutoCompleteTextView mUsernameView;
-    private EditText mPasswordView;
-    private EditText mConfirmPasswordView;
-
+    ImageView signupback;
+    private customfonts.MyEditText mEmailView;
+    private customfonts.MyEditText mUsernameView;
+    private customfonts.MyEditText mPasswordView;
+    private customfonts.MyEditText mConfirmPasswordView;
+    private customfonts.MyTextView regBtn;
     // Firebase instance variables
         private FirebaseAuth mAuth;
 
@@ -47,10 +53,33 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.register_email);
-        mPasswordView = (EditText) findViewById(R.id.register_password);
-        mConfirmPasswordView = (EditText) findViewById(R.id.register_confirm_password);
-        mUsernameView = (AutoCompleteTextView) findViewById(R.id.register_username);
+        mEmailView = (customfonts.MyEditText) findViewById(R.id.register_email);
+        mPasswordView = (customfonts.MyEditText) findViewById(R.id.register_password);
+        mConfirmPasswordView = (customfonts.MyEditText) findViewById(R.id.register_confirm_password);
+        mUsernameView = (customfonts.MyEditText) findViewById(R.id.register_username);
+
+        signupback = (ImageView)findViewById(R.id.signupback);
+
+        signupback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent it = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(it);
+
+            }
+        });
+
+
+        regBtn=(customfonts.MyTextView)findViewById(R.id.register_sign_up_button);
+
+        regBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signUp(view);
+            }
+        });
 
         // Keyboard sign in action
         mConfirmPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -67,6 +96,8 @@ public class RegisterActivity extends AppCompatActivity {
         // TODO: Get hold of an instance of FirebaseAuth
 
         mAuth=FirebaseAuth.getInstance();
+
+
 
 
     }
